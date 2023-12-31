@@ -30,7 +30,7 @@ const InputField = (props : inputFieldsProps) => {
             width: `${props.boxWidth}`,
             padding:0,
             height: `${props.boxHeight}`, 
-            marginBottom: "10px", 
+            marginBottom: "30px", 
             // marginTop : "25
             }}
             >

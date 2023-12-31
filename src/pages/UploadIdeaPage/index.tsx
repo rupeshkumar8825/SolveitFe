@@ -1,5 +1,5 @@
-import { Alert, Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Toolbar, Typography } from "@mui/material";
-import React, { SelectHTMLAttributes, useEffect, useState } from "react";
+import { Alert, Box, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Toolbar, Typography } from "@mui/material";
+import React, { ChangeEvent, SelectHTMLAttributes, useEffect, useState } from "react";
 import { ICategory } from "../../interfaces/UploadIdeaRelatedInterfaces";
 import { listOfCateogries, yesNo } from "../../constants/UploadIdeaRelatedConstants";
 import InputField from "../../components/inputField";
@@ -15,11 +15,13 @@ const UploadIdeaPage = () => {
     const [othersKnow, setOthersKnow] = useState<string>("");
     const [intensity, setIntensity] = useState<string>("");
     const [ideaDescription, setIdeaDescription] = useState<string>("");
-
+    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
     // defining the handlers for this component for this purpose 
     const handleUpload = () => {
         console.log("creating the new idea \n");
+        //here we have to make a api call to create a new idea for this purpose 
+        
 
     }
 
@@ -56,15 +58,12 @@ const UploadIdeaPage = () => {
         setIdeaDescription(targetValue);
     }
     
+    const onChangeFileUploadHandler = (event : ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files && event.target.files[0];
+        console.log("the file uploaded by the the user is as follows \n", file);
+        setUploadedFile(file);
 
-    // the following fields we are going to ask from the user in order to upload the new idea to the database for this purpose 
-    // 1. idea name 
-    // 2. Category 
-    // 3. Does your family friend also face this issue 
-    // 4. Rate the intensity of the problem out of 10 
-    // 5. More Detail about the idea 
-    // 6. Upload a supporting image for show casing the problem for this purpose 
-    // 7. Upload idea button for submitting the final idea for this purpose 
+    }
 
 	return (
 		<>
@@ -101,7 +100,7 @@ const UploadIdeaPage = () => {
 				>
 
 					{/* box for a field for projName  */}
-					<InputField boxWidth="90%" boxHeight="12%" typographyContent="Idea Name: " textFieldValue={ideaName} textFieldOnChangeHandler={onChangeIdeaNameHandler} textFieldWidth="70%" multiLine={false} ></InputField>
+					<InputField boxWidth="90%" boxHeight="12%" typographyContent="Idea Name: " textFieldValue={ideaName} textFieldOnChangeHandler={onChangeIdeaNameHandler} textFieldWidth="60%" multiLine={false} ></InputField>
 
 
 					{/* dropdown for selecting the Category of the idea for this purpose  */}
@@ -116,17 +115,17 @@ const UploadIdeaPage = () => {
 							width: `90%`,
 							padding: 0,
 							height: `12%`,
-							marginBottom: "10px",
+							marginBottom: "30px",
 							// marginTop : "2%"
 						}}
 					>
-						<Typography sx={{ padding: 0, fontWeight: "bold" }}> Category </Typography>
+						<Typography sx={{ padding: 0, fontWeight: "bold"}}> Category: </Typography>
 						<Select
 							value={category}
 							label="Age"
 							size="small"
 							onChange={onChangeIdeaCategoryHandler}
-							sx={{ width: "70%" }}
+							sx={{ width: "60%" }}
 						>
 							
 							{listOfCateogries.map((currCategory : ICategory, index: number) =>
@@ -155,7 +154,7 @@ const UploadIdeaPage = () => {
 							width: `90%`,
 							padding: 0,
 							height: `12%`,
-							marginBottom: "10px",
+							marginBottom: "30px",
 							// marginTop : "2%"
 						}}
 					>
@@ -165,7 +164,7 @@ const UploadIdeaPage = () => {
 							label="Age"
 							size="small"
 							onChange={onChangeOthersKnowHandler}
-							sx={{ width: "70%" }}
+							sx={{ width: "60%" }}
 						>
 							
 							{yesNo.map((currAnswer : string, index: number) =>
@@ -184,13 +183,39 @@ const UploadIdeaPage = () => {
 
                     
                     {/* box field for measuring the intensity of the problem for this purpose  */}
-                    <InputField boxWidth="80%" boxHeight="12%" typographyContent="Rate the Intensity of the problem out of 10." textFieldValue={intensity} textFieldOnChangeHandler={onChangeIntensityHandler} multiLine={true} textFieldWidth="70%" ></InputField>
+                    <InputField boxWidth="90%" boxHeight="12%" typographyContent="Rate the Intensity of the problem out of 10." textFieldValue={intensity} textFieldOnChangeHandler={onChangeIntensityHandler} multiLine={true} textFieldWidth="60%" ></InputField>
                 
                     {/* box field Details about the project */}
-                    <InputField boxWidth="80%" boxHeight="12%" typographyContent="Explain the Problem in detail: " multiLine={true} textFieldValue={ideaDescription} textFieldOnChangeHandler={onChangeIdeaDescriptionHandler} textFieldWidth="70%" ></InputField>
+                    <InputField boxWidth="90%" boxHeight="12%" typographyContent="Explain the Problem in detail: " multiLine={true} textFieldValue={ideaDescription} textFieldOnChangeHandler={onChangeIdeaDescriptionHandler} textFieldWidth="60%" ></InputField>
+                    
+                    <Box
+						component="span"
+						sx={{
+							display: "flex",
+							justifyContent: "space-between",
+							alignItems: "center",
+							flexGrow: 1,
+							bgcolor: "background.default",
+							width: `90%`,
+							padding: 0,
+							height: `12%`,
+							marginBottom: "10px",
+							// marginTop : "2%"
+						}}
+					>
+						<Typography sx={{ padding: 0, fontWeight: "bold" }}> Upload Image:  </Typography>
+    
+                        <Input
+                            type="file"
+                            inputProps={{ accept: 'image/*' }} // Specify the accepted file types
+                            onChange={onChangeFileUploadHandler}
+                            sx={{ width: "60%" }}
+                        />
 
+					</Box>
 					
 				</Box>
+
 
 				{/* box for buttons  to handle the upload new idea and then to reset the value for this purpose */}
 				<ButtonPair buttonContent1="Upload" buttonContent2="Reset" width="30%" height="5%" buttonBg1="#6B9DD7" buttonBg2="#FA5247" buttonHandler1={handleUpload} buttonHandler2={handleReset} ></ButtonPair>
