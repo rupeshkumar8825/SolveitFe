@@ -52,7 +52,7 @@ const Topbar = () => {
             component="div"
             style={{ cursor: "pointer", fontWeight: "lighter" }}
           >
-            <Button color="inherit" component={RouterLink} to={"/allProjects"}>
+            <Button color="inherit" component={RouterLink} to={"/home"}>
               Home
             </Button>
           </Typography>

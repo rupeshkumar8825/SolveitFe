@@ -20,14 +20,11 @@ import Topbar from "./Topbar";
 import { wrap } from "module";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { IAuthState } from "../../interfaces/AuthRelatedInterfaces";
 
 const drawerWidth = `14%`;
 
 export default function Sidebar() {
   // fetching the current user from the react state 
-  const authDetails : IAuthState = useSelector((state : any) => state.authReducer);
-
   
   return (
     <Box sx={{ display: "flex" }}>
