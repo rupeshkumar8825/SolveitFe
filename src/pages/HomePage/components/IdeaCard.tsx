@@ -17,9 +17,11 @@ import { Box, Button, Typography } from '@mui/material';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import CommentIcon from '@mui/icons-material/Comment';
-// import ShareIcon from '@mui/icons-material/Share';
+import { IIdeaCardProps } from '../../../interfaces/HomeRelatedInterfaces';
 
-export default function IdeaCard() {
+
+
+export default function IdeaCard(props : IIdeaCardProps) {
 
 
   return (
@@ -39,24 +41,20 @@ export default function IdeaCard() {
             // marginTop : "25
             }}
             >
-            <Typography  sx={{padding: 0, fontWeight: "bold", fontSize : "1.2rem"}}>Ttile of Idea </Typography>
-            {/* <Typography  sx={{padding: 0,width: "40%", color : "#6B9DD7", fontWeight: "bold", fontSize : "0.6rem"}}> Updated on some time  </Typography> */}
-            <Button variant="contained" size='small' sx={{backgroundColor: "blue", width : "13%", height: "30px",fontSize : "0.6rem"}}>
+            <Typography  sx={{padding: 0, fontWeight: "bold", fontSize : "1.2rem"}}>{props.ideaTitle} </Typography>
+          <Button onClick={props.onShowDetailsHandler} variant="contained" size='small' sx={{backgroundColor: "blue", width : "13%", height: "30px",fontSize : "0.6rem"}}>
             Show details 
           </Button>
           </Box>
       
       <CardContent sx={{marginBottom : "1%", height : "120px"}}>
         <Typography variant="body2" color="text.secondary">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur ut vero alias omnis dolorum voluptas quibusdam sed commodi suscipit beatae illum quae, eaque repellat dolor earum provident, tempora quam. Obcaecati.
-          Reiciendis autem natus dolor quidem culpa repudiandae facere debitis eos deleniti dolorem voluptas, aut magnam dignissimos at officiis mollitia fuga iusto eius quos! Cum soluta, quis nesciunt necessitatibus magnam pariatur!
-          Nisi praesentium molestiae minima dignissimos, nihil veritatis obcaecati voluptatibus sapiente totam, atque eius numquam quod iste a quasi, voluptas distinctio laborum! Error nostrum animi cumque, reiciendis provident molestiae ducimus beatae.
+          {props.ideaDescription}
         </Typography>
         <Typography sx={{border : 0.5, borderColor : "lightblue", marginTop : "3%"}}></Typography>
       </CardContent>
       <CardActions disableSpacing>
         
-        {/* <hr /> */}
         <Box
         component="main"
         sx={{
@@ -85,7 +83,7 @@ export default function IdeaCard() {
           >
             <RemoveRedEyeIcon></RemoveRedEyeIcon>
             <Typography sx={{marginLeft : "15px"}}>
-              100 views 
+              {props.views} views 
             </Typography>
           </Box>
           <Box
@@ -102,9 +100,8 @@ export default function IdeaCard() {
           }}
           >
             <ThumbUpIcon></ThumbUpIcon>
-            
-            <Typography sx={{marginLeft : "15px"}}>
-              200 Upvotes 
+            <Typography onClick={props.onUpvoteIdeaHandler} sx={{marginLeft : "15px"}}>
+              {props.upvotes} Upvotes 
             </Typography>
           </Box>
           
@@ -122,8 +119,8 @@ export default function IdeaCard() {
           }}
           >
             <ShareIcon></ShareIcon>
-            <Typography sx={{marginLeft : "15px"}}>
-              10 Share 
+            <Typography onClick={props.onShareIdeaHandler} sx={{marginLeft : "15px"}}>
+              {props.shares} Share 
             </Typography>
           </Box>
 
@@ -137,11 +134,10 @@ export default function IdeaCard() {
             bgcolor: "background.default",
             width: ``,
             padding:0,
-            // border : 2, 
           }}
           >
             <CommentIcon></CommentIcon>
-            <Typography sx={{marginLeft : "15px"}}>
+            <Typography onClick={props.onCommentHandler} sx={{marginLeft : "15px"}}>
               Comments
             </Typography>
           </Box>
