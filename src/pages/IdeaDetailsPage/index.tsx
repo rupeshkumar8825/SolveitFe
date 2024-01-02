@@ -9,9 +9,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import imageThumbnail from "../../assets/thumb1.png";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
-// import imageThumbnail from "../../../public/thumb1.png"
-// import imageThumbnail from "../../assets/thumb1"
-// import imageThumbnail from "./thumb1"
+
 
 const IdeaDetailsPage = () => {
 
