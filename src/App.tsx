@@ -10,11 +10,14 @@ import { authenticateUserApi, loginApi } from "./apis/AuthRelatedApis";
 import { getUsersListApi } from "./apis/UserRelatedApis";
 import { IPublicClientApplication, PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
-
+import LoginPage from "./pages/LoginPage";
 
 function App() {
 	
+	// fetching the value of the authentication reducer for this purpose 
+	const userDetails = useSelector((state : any) => state.authReducer);
 	useEffect(() => {
+		console.log("we are in the app component and the value of userdetails is as follows \n", userDetails);
 		return () => {
 			// cleanup code here
 		};
@@ -22,30 +25,31 @@ function App() {
 
 
 
+	// using the if else statement in order to decide which page render either login page or home page for this purpose 
+	if(userDetails.isLoggedIn)
+	{
+		// then we have to render the home page for this purpose 
+	
+		return (
+			<>
+				<CssBaseline />
+				<Navigation></Navigation>
+				<AppRoutes></AppRoutes>
+			
+			</>
+		);
 
-
-	return (
-		// <MsalProvider instance={props.instance}>
-			// <div className="App">
-		<>
-			<CssBaseline />
-			<Navigation></Navigation>
-			<AppRoutes></AppRoutes>
-		
-		</>
-			// </div>
-
-		// </MsalProvider>
-	);
-	// } else {
-	// 	return (
-	// 		<>
-	// 			<MsalProvider instance = {props.instance}>
-	// 				<LoginPage  handleLoginCallback={handleLoginCallback}></LoginPage>
-	// 			</MsalProvider>
-	// 		</>
-	// 	);
-	// }
+	}
+	else 
+	{
+		// we have to render the login page for this purpose 
+		return (
+			
+			<LoginPage></LoginPage>
+		)
+	}
+	
+	
 }
 
 export default App;
