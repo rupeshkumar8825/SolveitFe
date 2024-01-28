@@ -4,9 +4,9 @@ import { getApiCall, postApiCall } from "./httpApis";
 let baseUrl = process.env.REACT_APP_BASE_URL;
 
 const loginApi = (creds : any, callback : any) => {
-    // console.log("Making the post request to login to the user\n\n");
-    let url = `${baseUrl}auth/login`;
 
+    let url = `${baseUrl}auth/login`;
+    console.log("the url that i am hitting is as follows while logging in and sending the google token to the backend for this purpose  \n", url);
     // sending the post request to the server 
     postApiCall(url, creds, callback);
 
