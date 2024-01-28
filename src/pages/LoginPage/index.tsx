@@ -1,40 +1,35 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 // import google from  "@types/google.accounts";
 const LoginPage = () => {
   
+  const dispatch = useDispatch();
 
-    // defining the callback handlers here for this purpose 
-    const handleCallbackResponse = (response : any) => {
-        console.log("encoded jwt id token : ", response.credential);
+  // defining the callback handlers here for this purpose 
+  const handleCallbackResponse = (response : any) => {
+      console.log("encoded jwt id token : ", response.credential);
+      // here we have to dispatch the action to login the user 
+      dispatch({type : 'LOGIN', payload : {userID : "rupesh", email : "someEmail@gmail.com"}});
+  }
+
+
+  // using the useeffect 
+  useEffect(() => {
+      console.log("came inside\n");
+      google.accounts!.id.initialize({
+          client_id : "579357163340-2q0ub2pi9mkqll08s0qf4nas38gok7no.apps.googleusercontent.com", 
+          callback : handleCallbackResponse
+      });
+  
+      const docGetId = document.getElementById("signInDiv")!;
+      google.accounts.id.renderButton (docGetId,
+          {theme : "outline", type: "standard", size: "large"}
+      );
+    return () => {
     }
-    // using the useeffect 
-    useEffect(() => {
-    //   write your code here
-    // global google
-    // console.log("rendering the google object for this purpose\n", google); 
-    // if(google != null)
-    // {
-        console.log("came inside\n");
-        google.accounts!.id.initialize({
-            client_id : "579357163340-2q0ub2pi9mkqll08s0qf4nas38gok7no.apps.googleusercontent.com", 
-            callback : handleCallbackResponse
-        });
-    
-        const docGetId = document.getElementById("signInDiv")!;
-        google.accounts.id.renderButton (docGetId,
-            {theme : "outline", type: "standard", size: "large"}
-        );
-        
-     
-        // window.google.accounts.id.prompt();
-
-    // }
-      return () => {
-        // write cleanup code if any 
-      }
-    }, [])
-    
+  }, [])
+  
    
   
   return (
