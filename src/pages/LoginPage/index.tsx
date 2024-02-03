@@ -9,26 +9,31 @@ const LoginPage = () => {
 
   // defining the callback handlers here for this purpose 
   const handleCallbackResponse = (response : any) => {
-      console.log("encoded jwt id token : ", response.credential);
-      // here we have to make the login api call for this purpose 
-      // we have to send the token that we have got from the google side 
-      // after validating in the backend, the backend will store the token of the client 
-      // in the form of cookie inside the browser for this purpose 
       const creds = {
         googleToken : response.credential
       };
       console.log("the credential that i am sending is as follows \n", creds);
       loginApi(creds, loginApiCallback);
       // here we have to dispatch the action to login the user 
-      dispatch({type : 'LOGIN', payload : {userID : "rupesh", email : "someEmail@gmail.com"}});
+      // dispatch({type : 'LOGIN', payload : {userID : "rupesh", email : "someEmail@gmail.com"}});
   }
 
 
   // defining the callbacks for this puropse 
   // this is the callback after login in into the app for this purpose 
   const loginApiCallback = (resultType : string, serverResponse : any) => {
-    console.log("the response from the server is as follows\n", serverResponse);
-    // here we have to dispatch the action to set the user for this purpose 
+    console.log("the response from the server is as follows from the login callback \n", serverResponse);
+    if(serverResponse.status === 200)
+    {
+      // here we have to dispatch the action stating that user is already logged in for this purpose 
+      console.log("the status code is 200\n");
+      dispatch({type : 'LOGIN', payload : {userId : "rupesh", email : "someemail@gmail.com"}});
+    }
+    else if(serverResponse.response?.status === 401)
+    {
+      // this is unauthorized hence we have to make the user logout from the application 
+
+    }
 
   }
   // using the useeffect 

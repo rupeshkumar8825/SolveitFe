@@ -4,7 +4,7 @@ import { IAuthState } from "../../interfaces/AuthRelatedInterfaces";
 const initialState : IAuthState = {
     userId : null, 
     email : null, 
-    isLoggedIn : false
+    isLoggedIn : true
 }
 
 
