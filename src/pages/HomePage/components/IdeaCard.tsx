@@ -83,7 +83,7 @@ export default function IdeaCard(props : IIdeaCardProps) {
           >
             <RemoveRedEyeIcon></RemoveRedEyeIcon>
             <Typography sx={{marginLeft : "15px"}}>
-              {props.views} views 
+              200 views 
             </Typography>
           </Box>
           <Box

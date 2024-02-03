@@ -14,7 +14,6 @@ export interface IIdeaCardProps {
     id : string, 
     ideaTitle : string, 
     ideaDescription : string, 
-    views : number,
     upvotes : number, 
     shares : number, 
     onShowDetailsHandler() : void, 

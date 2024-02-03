@@ -1,8 +1,8 @@
 import { IdeaConstants } from '../../constants/IdeaRelatedConstants';
-import { IdeaDetails } from '../../interfaces/IdeaRelatedInterfaces';
+import { IIdeaDetails } from '../../interfaces/IdeaRelatedInterfaces';
 
 // this is the reducer related to the idea section for this purpose 
-const initialState :  IdeaDetails[] = [];
+const initialState :  IIdeaDetails[] = [];
 
 const ideaListReducer = (state = initialState, actions : any) => {
     // using the switch case statements here

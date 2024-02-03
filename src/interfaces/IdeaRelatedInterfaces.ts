@@ -1,5 +1,5 @@
 // here we  will write the interfaces related to the idea for this purpose 
-export interface IdeaDetails {
+export interface IIdeaDetails {
     _id : string,
     ideaName : string, 
     ideaDescription : string, 

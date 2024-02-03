@@ -12,6 +12,8 @@ import { IPublicClientApplication, PublicClientApplication } from "@azure/msal-b
 import { MsalProvider } from "@azure/msal-react";
 import LoginPage from "./pages/LoginPage";
 import { getAllIdeasApi } from "./apis/IdeasRelatedApis";
+import { IIdeaDetails } from "./interfaces/IdeaRelatedInterfaces";
+import { IdeaConstants } from "./constants/IdeaRelatedConstants";
 
 function App() {
 	
@@ -21,30 +23,32 @@ function App() {
 	// defining the ideas callback for this purpose 
 	const  getAllIdeasApiCallback = (resultType : string, serverResponse : any) => {
 		console.log("the response from the server is as follows \n", serverResponse);
-		if(serverResponse.status === 200)
+		if(serverResponse.response?.status && serverResponse.response.status === 500)
 		{
-			console.log("the response from the server is 200\n");
+			// do nothing for now 			
+		}
+		else if(serverResponse.response?.status && serverResponse.response.status === 401)
+		{
+			dispatch({type : "LOGOUT"});
+		}
+		else if(serverResponse.response?.status && serverResponse.response.status === 403)
+		{
+			// do nothing 
+		}
+		else if(serverResponse.status === 200)
+		{
 			const responseData = serverResponse.data;
-			console.log("the response data is as follows \n", responseData);
+			const payload : IIdeaDetails[] = responseData.data;
+			dispatch({type : IdeaConstants.GET_IDEA_LIST, payload : payload});
 		}
-		else if(serverResponse.response.status === 500)
-		{
-			// this means that this users is not logged in 
-			// hence we have to dispatch the action to let the user logs in for this purpose 
-			console.log("came inside the else block ");
-		}
-		dispatch({type : 'LOGOUT'});
 	}
 
 	useEffect(() => {
-		// here we will make the get request to get the list of all the ideas that are there for this purpose 
-		// if we will get unauthorized error then we can say that the user is logged in hence we will redirect him to the login page by sending the dispatch action for this purpose 
-		// here we have to call the backend api to get the list of all the ideas for this puropse 
 		getAllIdeasApi(getAllIdeasApiCallback)
 		return () => {
 			// cleanup code here
 		};
-	}, []);
+	}, [userDetails.isLoggedIn]);
 
 
 
