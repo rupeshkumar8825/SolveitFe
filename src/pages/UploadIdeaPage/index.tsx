@@ -4,6 +4,8 @@ import { ICategory } from "../../interfaces/UploadIdeaRelatedInterfaces";
 import { listOfCateogries, yesNo } from "../../constants/UploadIdeaRelatedConstants";
 import InputField from "../../components/inputField";
 import ButtonPair from "../../components/buttonPair";
+import { IUploadNewIdea } from "../../interfaces/IdeaRelatedInterfaces";
+import { createNewIdeasApi } from "../../apis/IdeasRelatedApis";
 
 
 const UploadIdeaPage = () => {
@@ -17,19 +19,8 @@ const UploadIdeaPage = () => {
     const [ideaDescription, setIdeaDescription] = useState<string>("");
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
-    // defining the handlers for this component for this purpose 
-    const handleUpload = () => {
-        console.log("creating the new idea \n");
-        //here we have to make a api call to create a new idea for this purpose 
-        
-
-    }
-
-    const handleReset = () => {
-        console.log("resetting all the entries\n");
-    }
-
-
+	
+	// defining the on change/edit handlers here for this page 
     const onChangeIdeaNameHandler = (event : React.ChangeEvent<any> ) => {
         const targetValue = event.target.value;
         setIdeaName(targetValue);
@@ -46,13 +37,13 @@ const UploadIdeaPage = () => {
         setOthersKnow(targetValue);
     }
 
-
+	
     const onChangeIntensityHandler = (event : React.ChangeEvent<any>) => {
         const targetValue = event.target.value;
         setIntensity(targetValue);
     }
 
-
+	
     const onChangeIdeaDescriptionHandler = (event : React.ChangeEvent<any>) => {
         const targetValue = event.target.value;
         setIdeaDescription(targetValue);
@@ -60,10 +51,51 @@ const UploadIdeaPage = () => {
     
     const onChangeFileUploadHandler = (event : ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
-        console.log("the file uploaded by the the user is as follows \n", file);
         setUploadedFile(file);
-
+		
     }
+	
+	const handleUpload = () => {
+		const payload : IUploadNewIdea = {
+			ideaName : ideaName, 
+			ideaDescription : ideaDescription, 
+			createdBy : "", 
+			rating : parseInt(intensity, 10),
+			thumbnail : "",
+			othersKnow : othersKnow, 
+			category : category, 
+		}	
+
+		console.log("the value of the payload is ", payload);
+
+		// here we have to make a backend api call to create a new idea for this purpose 
+		createNewIdeasApi(payload, createNewIdeasApiCallback); 
+
+
+	}
+
+	const handleReset = () => {
+		console.log("resetting all the entries\n");
+		setIdeaName("");
+		setIdeaDescription("");
+		setOthersKnow("");
+		setUploadedFile(null);
+		setCategory("");
+		setIntensity("");
+
+	}
+
+
+
+	// callbacks inmplementation for this component comes here
+	const createNewIdeasApiCallback = (resultType : string, serverResponse : any) => {
+		console.log("the resposne from the server side is: \n", serverResponse);
+		// say everything went fine 
+		return;
+	}
+
+	
+
 
 	return (
 		<>

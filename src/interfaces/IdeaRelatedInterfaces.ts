@@ -13,3 +13,13 @@ export interface IIdeaDetails {
     shared : string[], 
     othersKnow : string 
 }
+
+export interface IUploadNewIdea {
+    ideaName : string, 
+    ideaDescription : string, 
+    createdBy : string, 
+    rating : number, 
+    thumbnail : string, 
+    othersKnow : string,
+    category : string, 
+}

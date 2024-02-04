@@ -10,9 +10,14 @@ const getAllIdeasApi = (callback : any) => {
     getApiCall(url, callback);
 } 
 
+const createNewIdeasApi = (payload : any , callback : any) => {
+    let url = `${baseUrl}ideas/`;
+    postApiCall(url, payload, callback);    
+}
 
 export {
-    getAllIdeasApi
+    getAllIdeasApi, 
+    createNewIdeasApi, 
 }
 // const startupSqmForProjectApi = (projId : string, callback : any) => 
 // {
