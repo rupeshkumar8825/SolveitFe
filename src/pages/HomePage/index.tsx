@@ -11,44 +11,6 @@ import { IIdeaDetails } from "../../interfaces/IdeaRelatedInterfaces";
 import { ideaListReducer } from "../../redux/reducers/IdeaReducer";
 
 
-
-// defining the dummy data for the idea cards for this purpose 
-// const dummyIdeaCardList : IIdeaCard[]= [
-//     {
-//         id : "1",
-//       ideaTitle : "Idea1", 
-//       ideaDescription : "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur ut vero alias omnis dolorum voluptas quibusdam sed commodi suscipit beatae illum quae, eaque repellat dolor earum provident, tempora quam. ObcaecatiReiciendis autem natus dolor quidem culpa repudiandae facere debitis eos deleniti dolorem voluptas, aut magnam dignissimos at officiis mollitia fuga iusto eius quos! Cum soluta, quis nesciunt necessitatibus magnam pariatur!Nisi praesentium molestiae minima dignissimos, nihil veritatis obcaecati voluptatibus sapiente totam, atque eius numquam quod iste a quasi, voluptas distinctio laborum! Error nostrum animi cumque, reiciendis provident molestiae ducimus beatae.", 
-//       views : 100, 
-//       upvotes : 200, 
-//       shares : 20, 
-//     }, 
-//     {
-//         id : "2", 
-//       ideaTitle : "Idea2",
-//       ideaDescription : "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur ut vero alias omnis dolorum voluptas quibusdam sed commodi suscipit beatae illum quae, eaque repellat dolor earum provident, tempora quam. ObcaecatiReiciendis autem natus dolor quidem culpa repudiandae facere debitis eos deleniti dolorem voluptas, aut magnam dignissimos at officiis mollitia fuga iusto eius quos! Cum soluta, quis nesciunt necessitatibus magnam pariatur!Nisi praesentium molestiae minima dignissimos, nihil veritatis obcaecati voluptatibus sapiente totam, atque eius numquam quod iste a quasi, voluptas distinctio laborum! Error nostrum animi cumque, reiciendis provident molestiae ducimus beatae.", 
-//       views : 10, 
-//       upvotes : 20, 
-//       shares : 5, 
-//     }, 
-//     {
-//         id : "3", 
-//       ideaTitle : "Idea3", 
-//       ideaDescription : "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur ut vero alias omnis dolorum voluptas quibusdam sed commodi suscipit beatae illum quae, eaque repellat dolor earum provident, tempora quam. ObcaecatiReiciendis autem natus dolor quidem culpa repudiandae facere debitis eos deleniti dolorem voluptas, aut magnam dignissimos at officiis mollitia fuga iusto eius quos! Cum soluta, quis nesciunt necessitatibus magnam pariatur!Nisi praesentium molestiae minima dignissimos, nihil veritatis obcaecati voluptatibus sapiente totam, atque eius numquam quod iste a quasi, voluptas distinctio laborum! Error nostrum animi cumque, reiciendis provident molestiae ducimus beatae.", 
-//       views : 60, 
-//       upvotes : 250, 
-//       shares : 20, 
-//     }, 
-//     {
-//         id : "4", 
-//       ideaTitle : "Idea4", 
-//       ideaDescription : "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur ut vero alias omnis dolorum voluptas quibusdam sed commodi suscipit beatae illum quae, eaque repellat dolor earum provident, tempora quam. ObcaecatiReiciendis autem natus dolor quidem culpa repudiandae facere debitis eos deleniti dolorem voluptas, aut magnam dignissimos at officiis mollitia fuga iusto eius quos! Cum soluta, quis nesciunt necessitatibus magnam pariatur!Nisi praesentium molestiae minima dignissimos, nihil veritatis obcaecati voluptatibus sapiente totam, atque eius numquam quod iste a quasi, voluptas distinctio laborum! Error nostrum animi cumque, reiciendis provident molestiae ducimus beatae.", 
-//       views : 100, 
-//       upvotes : 200, 
-//       shares : 20, 
-//     }, 
-    
-//   ]
-
   
 // making the dummy value data for the ideacard that we get from the backend for this purpose 
 const HomePage = () => {
