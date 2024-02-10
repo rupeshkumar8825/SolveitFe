@@ -1,7 +1,7 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { loginApi } from "../../apis/AuthRelatedApis";
+import { authenticateUserApi, loginApi } from "../../apis/AuthRelatedApis";
 
 
 
@@ -18,13 +18,38 @@ const LoginPage = () => {
         googleToken : response.credential
       };
       loginApi(creds, loginApiCallback);
-      dispatch({type : 'LOGIN', payload : {userID : "rupesh", email : "someEmail@gmail.com"}});
   }
 
 
+  const authenticateUserApiCallback = (resultType : string, serverResponse : any) => {
+		// here we have to check the status of the serverresponse for this purpose 
+		if(serverResponse.response?.status && serverResponse.response.status === 500)
+		{
+			// do nothing for now 			
+		}
+		else if(serverResponse.response?.status && serverResponse.response.status === 401)
+		{
+			dispatch({type : "LOGOUT"});
+		}
+		else if(serverResponse.response?.status && serverResponse.response.status === 403)
+		{
+			// do nothing 
+		}
+		else if(serverResponse.status === 200)
+		{
+			const responseData = serverResponse.data.data;
+			dispatch({type : 'LOGIN', payload : {userId : responseData.id, email : responseData.email}})
+			// getAllIdeasApi(getAllIdeasApiCallback);
+		}
+		
+
+	};
   const loginApiCallback = (resultType : string, serverResponse : any) => {
     if(serverResponse.status === 200)
     {
+      // here we have to then call the authenticate user to get the value of the logged in user for this purpose 
+      authenticateUserApi(authenticateUserApiCallback)
+
     }
     else if(serverResponse.response?.status === 401)
     {

@@ -71,9 +71,13 @@ function App() {
 	};
 
 
-	
+
 	useEffect(() => {
-		authenticateUserApi(authenticateUserApiCallback);
+		if(userDetails.isLoggedIn)
+		{
+			authenticateUserApi(authenticateUserApiCallback);
+			
+		}
 		return () => {
 			// cleanup code here
 		};
