@@ -2,43 +2,38 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loginApi } from "../../apis/AuthRelatedApis";
-// import google from  "@types/google.accounts";
+
+
+
+
 const LoginPage = () => {
   
   const dispatch = useDispatch();
 
-  // defining the callback handlers here for this purpose 
+
+
+  //allback handlers here for this purpose 
   const handleCallbackResponse = (response : any) => {
       const creds = {
         googleToken : response.credential
       };
-      console.log("the credential that i am sending is as follows \n", creds);
       loginApi(creds, loginApiCallback);
-      // here we have to dispatch the action to login the user 
-      // dispatch({type : 'LOGIN', payload : {userID : "rupesh", email : "someEmail@gmail.com"}});
+      dispatch({type : 'LOGIN', payload : {userID : "rupesh", email : "someEmail@gmail.com"}});
   }
 
 
-  // defining the callbacks for this puropse 
-  // this is the callback after login in into the app for this purpose 
   const loginApiCallback = (resultType : string, serverResponse : any) => {
-    console.log("the response from the server is as follows from the login callback \n", serverResponse);
     if(serverResponse.status === 200)
     {
-      // here we have to dispatch the action stating that user is already logged in for this purpose 
-      console.log("the status code is 200\n");
-      dispatch({type : 'LOGIN', payload : {userId : "rupesh", email : "someemail@gmail.com"}});
     }
     else if(serverResponse.response?.status === 401)
     {
-      // this is unauthorized hence we have to make the user logout from the application 
-
     }
-
   }
+
+
   // using the useeffect 
   useEffect(() => {
-      console.log("came inside\n");
       google.accounts!.id.initialize({
           client_id : "579357163340-2q0ub2pi9mkqll08s0qf4nas38gok7no.apps.googleusercontent.com", 
           callback : handleCallbackResponse
@@ -48,11 +43,14 @@ const LoginPage = () => {
       google.accounts.id.renderButton (docGetId,
           {theme : "outline", type: "standard", size: "large"}
       );
+
     return () => {
     }
   }, [])
   
    
+
+
   
   return (
     <>
@@ -101,7 +99,6 @@ const LoginPage = () => {
               }}
             >
               
-              {/* <h1>here is the login button for this purpose </h1> */}
               <div id="signInDiv"></div>
               
 

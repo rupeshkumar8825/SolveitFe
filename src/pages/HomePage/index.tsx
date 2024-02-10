@@ -12,30 +12,24 @@ import { ideaListReducer } from "../../redux/reducers/IdeaReducer";
 
 
   
-// making the dummy value data for the ideacard that we get from the backend for this purpose 
 const HomePage = () => {
     const listOfIdeas : IIdeaDetails[] = useSelector((state : any) => state.ideaListReducer);
 
     const navigate = useNavigate();
 
-    // defining the here the handlers for this component for this purpose 
+    //handlers for this component
     const onCommentHandler = (ideaId : string) => {
-        console.log("the user has shown interest to do the comment for this purpose \n", ideaId);
     }
 
     const onShareIdeaHandler = (ideaId : string) => {
-        console.log("the user is sharing this idea to other platforms also for this purpose \n", ideaId);
     } 
 
     const onShowDetailsHandler = (ideaId : string) => {
-        console.log("The user has clicked the show details page for this purpose\n", ideaId);
-        // here we have route to the correct path to show the details of the project for this purpose 
         navigate(`/ideaDetails/${ideaId}`);
         
     }
 
     const onUpvoteIdeaHandler = (ideaId : string) => {
-        console.log("The user has upvoted the idea for this purpose \n", ideaId);
     }
 
 

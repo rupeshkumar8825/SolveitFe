@@ -17,12 +17,13 @@ import { IdeaConstants } from "./constants/IdeaRelatedConstants";
 
 function App() {
 	
-	// fetching the value of the authentication reducer for this purpose 
 	const userDetails = useSelector((state : any) => state.authReducer);
 	const dispatch = useDispatch();
+
+
+
 	// defining the ideas callback for this purpose 
 	const  getAllIdeasApiCallback = (resultType : string, serverResponse : any) => {
-		console.log("the response from the server is as follows \n", serverResponse);
 		if(serverResponse.response?.status && serverResponse.response.status === 500)
 		{
 			// do nothing for now 			
@@ -43,8 +44,36 @@ function App() {
 		}
 	}
 
+
+
+	const authenticateUserApiCallback = (resultType : string, serverResponse : any) => {
+		// here we have to check the status of the serverresponse for this purpose 
+		if(serverResponse.response?.status && serverResponse.response.status === 500)
+		{
+			// do nothing for now 			
+		}
+		else if(serverResponse.response?.status && serverResponse.response.status === 401)
+		{
+			dispatch({type : "LOGOUT"});
+		}
+		else if(serverResponse.response?.status && serverResponse.response.status === 403)
+		{
+			// do nothing 
+		}
+		else if(serverResponse.status === 200)
+		{
+			const responseData = serverResponse.data.data;
+			dispatch({type : 'LOGIN', payload : {userId : responseData.id, email : responseData.email}})
+			getAllIdeasApi(getAllIdeasApiCallback);
+		}
+		
+
+	};
+
+
+	
 	useEffect(() => {
-		getAllIdeasApi(getAllIdeasApiCallback)
+		authenticateUserApi(authenticateUserApiCallback);
 		return () => {
 			// cleanup code here
 		};

@@ -1,10 +1,9 @@
 import { IAuthState } from "../../interfaces/AuthRelatedInterfaces";
 
-// this is the reducer for the authentication purpose that is to store the details of the user for this purpose 
 const initialState : IAuthState = {
     userId : null, 
     email : null, 
-    isLoggedIn : true
+    isLoggedIn : false
 }
 
 

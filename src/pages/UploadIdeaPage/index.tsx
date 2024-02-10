@@ -66,16 +66,13 @@ const UploadIdeaPage = () => {
 			category : category, 
 		}	
 
-		console.log("the value of the payload is ", payload);
-
-		// here we have to make a backend api call to create a new idea for this purpose 
+		// backend call to create new idea 
 		createNewIdeasApi(payload, createNewIdeasApiCallback); 
 
 
 	}
 
 	const handleReset = () => {
-		console.log("resetting all the entries\n");
 		setIdeaName("");
 		setIdeaDescription("");
 		setOthersKnow("");
