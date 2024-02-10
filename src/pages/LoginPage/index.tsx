@@ -38,8 +38,7 @@ const LoginPage = () => {
 		else if(serverResponse.status === 200)
 		{
 			const responseData = serverResponse.data.data;
-			dispatch({type : 'LOGIN', payload : {userId : responseData.id, email : responseData.email}})
-			// getAllIdeasApi(getAllIdeasApiCallback);
+			dispatch({type : 'LOGIN', payload : {userId : responseData._id, email : responseData.email}})
 		}
 		
 

@@ -9,14 +9,17 @@ import IdeaCard from "./components/IdeaCard"
 import { IIdeaCard } from "../../interfaces/HomeRelatedInterfaces";
 import { IIdeaDetails } from "../../interfaces/IdeaRelatedInterfaces";
 import { ideaListReducer } from "../../redux/reducers/IdeaReducer";
+import { getAllIdeasApi } from "../../apis/IdeasRelatedApis";
+import { IdeaConstants } from "../../constants/IdeaRelatedConstants";
 
 
   
 const HomePage = () => {
-    const listOfIdeas : IIdeaDetails[] = useSelector((state : any) => state.ideaListReducer);
+    const [listOfIdeas, setListOfIdeas] = useState<Array<IIdeaDetails>>([]);
 
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
+    
     //handlers for this component
     const onCommentHandler = (ideaId : string) => {
     }
@@ -33,18 +36,37 @@ const HomePage = () => {
     }
 
 
-    useEffect(() => {
-      // write your code here 
-      if(listOfIdeas)
-      {
-        console.log("the list of ideas is as follows\n", listOfIdeas);
-        
-      }
-      return () => {
-        // write cleanup code here 
-      }
-    }, [listOfIdeas])
     
+    const  getAllIdeasApiCallback = (resultType : string, serverResponse : any) => {
+      if(serverResponse.response?.status && serverResponse.response.status === 500)
+      {
+        // do nothing for now 			
+      }
+      else if(serverResponse.response?.status && serverResponse.response.status === 401)
+      {
+        dispatch({type : "LOGOUT"});
+      }
+      else if(serverResponse.response?.status && serverResponse.response.status === 403)
+      {
+        // do nothing 
+      }
+      else if(serverResponse.status === 200)
+      {
+        const responseData = serverResponse.data;
+        const payload : IIdeaDetails[] = responseData.data;
+        setListOfIdeas(payload);
+        dispatch({type : IdeaConstants.GET_IDEA_LIST, payload : payload});
+      }
+    }
+
+
+
+    useEffect(() => {
+      getAllIdeasApi(getAllIdeasApiCallback)
+    },[])
+    
+
+
   
   return (
     <>

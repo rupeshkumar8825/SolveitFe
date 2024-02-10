@@ -6,10 +6,12 @@ import InputField from "../../components/inputField";
 import ButtonPair from "../../components/buttonPair";
 import { IUploadNewIdea } from "../../interfaces/IdeaRelatedInterfaces";
 import { createNewIdeasApi } from "../../apis/IdeasRelatedApis";
+import { useSelector } from "react-redux";
 
 
 const UploadIdeaPage = () => {
-
+	// fetching the states from the store 
+	const loggedInUserDetails = useSelector((state : any) => state.authReducer);
 
     // defining the states for this component 
     const [ideaName, setIdeaName] = useState<string>("");
@@ -59,13 +61,14 @@ const UploadIdeaPage = () => {
 		const payload : IUploadNewIdea = {
 			ideaName : ideaName, 
 			ideaDescription : ideaDescription, 
-			createdBy : "", 
+			createdBy : loggedInUserDetails.userId, 
 			rating : parseInt(intensity, 10),
 			thumbnail : "",
 			othersKnow : othersKnow, 
 			category : category, 
 		}	
 
+		console.log("the payload that we are sending is as follows \n", payload);
 		// backend call to create new idea 
 		createNewIdeasApi(payload, createNewIdeasApiCallback); 
 

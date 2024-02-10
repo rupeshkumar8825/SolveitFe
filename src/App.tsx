@@ -41,6 +41,7 @@ function App() {
 			const responseData = serverResponse.data;
 			const payload : IIdeaDetails[] = responseData.data;
 			dispatch({type : IdeaConstants.GET_IDEA_LIST, payload : payload});
+			authenticateUserApi(authenticateUserApiCallback);
 		}
 	}
 
@@ -63,8 +64,8 @@ function App() {
 		else if(serverResponse.status === 200)
 		{
 			const responseData = serverResponse.data.data;
-			dispatch({type : 'LOGIN', payload : {userId : responseData.id, email : responseData.email}})
-			getAllIdeasApi(getAllIdeasApiCallback);
+			dispatch({type : 'LOGIN', payload : {userId : responseData._id, email : responseData.email}})
+			// getAllIdeasApi(getAllIdeasApiCallback);
 		}
 		
 
@@ -72,19 +73,21 @@ function App() {
 
 
 
-	useEffect(() => {
-		if(userDetails.isLoggedIn)
-		{
-			authenticateUserApi(authenticateUserApiCallback);
+	// useEffect(() => {
+	// 	if(userDetails.isLoggedIn)
+	// 	{
 			
-		}
-		return () => {
-			// cleanup code here
-		};
-	}, [userDetails.isLoggedIn]);
+	// 	}
+	// 	return () => {
+	// 		// cleanup code here
+	// 	};
+	// }, [userDetails.isLoggedIn]);
 
 
-
+	useEffect(() => {
+		// whenever the page renders for the first time then we have to fetch the value of the list of all the 
+		getAllIdeasApi(getAllIdeasApiCallback);
+	}, [userDetails.isLoggedIn])
 	
 	if(userDetails.isLoggedIn)
 	{
