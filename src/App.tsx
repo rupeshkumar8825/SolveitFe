@@ -11,7 +11,7 @@ import { getUsersListApi } from "./apis/UserRelatedApis";
 import { IPublicClientApplication, PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import LoginPage from "./pages/LoginPage";
-import { getAllIdeasApi } from "./apis/IdeasRelatedApis";
+import { getAllIdeasApi,  getIdeaThumbnailApi } from "./apis/IdeasRelatedApis";
 import { IIdeaDetails } from "./interfaces/IdeaRelatedInterfaces";
 import { IdeaConstants } from "./constants/IdeaRelatedConstants";
 
@@ -72,6 +72,10 @@ function App() {
 	};
 
 
+	const getIdeaThumbnailCallback = (resultType : string, serverResponse : any) => {
+		console.log("the response from the server is as follows \n", serverResponse);
+	}
+
 
 	// useEffect(() => {
 	// 	if(userDetails.isLoggedIn)
@@ -87,6 +91,8 @@ function App() {
 	useEffect(() => {
 		// whenever the page renders for the first time then we have to fetch the value of the list of all the 
 		getAllIdeasApi(getAllIdeasApiCallback);
+		getIdeaThumbnailApi(getIdeaThumbnailCallback);
+
 	}, [userDetails.isLoggedIn])
 	
 	if(userDetails.isLoggedIn)

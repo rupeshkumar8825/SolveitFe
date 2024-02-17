@@ -20,8 +20,14 @@ const getIdeaDetailsByIdApi = (ideaId : string, callback : any) => {
     getApiCall(url, callback);
 }
 
+const getIdeaThumbnailApi = (callback : any) => {
+    let url = `${baseUrl}ideas/image/thumbnail`;
+    getApiCall(url, callback);
+}
+
 export {
     getAllIdeasApi, 
     createNewIdeasApi, 
-    getIdeaDetailsByIdApi
+    getIdeaDetailsByIdApi, 
+    getIdeaThumbnailApi
 }
