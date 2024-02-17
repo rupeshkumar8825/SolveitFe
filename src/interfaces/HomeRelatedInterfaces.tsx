@@ -16,6 +16,7 @@ export interface IIdeaCardProps {
     ideaDescription : string, 
     upvotes : number, 
     shares : number, 
+    thumbnail : string,
     onShowDetailsHandler() : void, 
     onUpvoteIdeaHandler () : void, 
     onShareIdeaHandler () : void, 

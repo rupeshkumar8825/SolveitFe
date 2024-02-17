@@ -9,7 +9,7 @@ import IdeaCard from "./components/IdeaCard"
 import { IIdeaCard } from "../../interfaces/HomeRelatedInterfaces";
 import { IIdeaDetails } from "../../interfaces/IdeaRelatedInterfaces";
 import { ideaListReducer } from "../../redux/reducers/IdeaReducer";
-import { getAllIdeasApi } from "../../apis/IdeasRelatedApis";
+import { getAllIdeasApi, getIdeaThumbnailApi } from "../../apis/IdeasRelatedApis";
 import { IdeaConstants } from "../../constants/IdeaRelatedConstants";
 
 
@@ -60,9 +60,15 @@ const HomePage = () => {
     }
 
 
+    const getIdeaThumbnailCallback = (resultType : string, serverResponse : any) => {
+      console.log("the response from the server is as follows \n", serverResponse);
+    }
+  
+
 
     useEffect(() => {
       getAllIdeasApi(getAllIdeasApiCallback)
+      // getIdeaThumbnailApi(getIdeaThumbnailCallback);
     },[])
     
 
@@ -74,7 +80,7 @@ const HomePage = () => {
       <Box sx={{display: "flex", justifyContent: 'space-evenly', flexWrap : "wrap",alignItems: 'center', mt: `10%`, width: `80%`, marginLeft: `16%`, paddingLeft:0, paddingRight:0, marginBottom: "4%"}}>
         {/* using the map function to show all the list of ideas for this purpose  */}
         {listOfIdeas?.map((currentIdea : IIdeaDetails) => {
-            return <IdeaCard  id={currentIdea._id} ideaTitle={currentIdea.ideaName} ideaDescription={currentIdea.ideaDescription}upvotes={currentIdea.upvotes.length} shares={currentIdea.shared.length} onCommentHandler={() => onCommentHandler(currentIdea._id)} onShareIdeaHandler={() => onShareIdeaHandler(currentIdea._id)} onShowDetailsHandler={() => onShowDetailsHandler(currentIdea._id)} onUpvoteIdeaHandler={() => onUpvoteIdeaHandler(currentIdea._id)}></IdeaCard>
+            return <IdeaCard  id={currentIdea._id} ideaTitle={currentIdea.ideaName} ideaDescription={currentIdea.ideaDescription}upvotes={currentIdea.upvotes.length} shares={currentIdea.shared.length} thumbnail={currentIdea.thumbnail} onCommentHandler={() => onCommentHandler(currentIdea._id)} onShareIdeaHandler={() => onShareIdeaHandler(currentIdea._id)} onShowDetailsHandler={() => onShowDetailsHandler(currentIdea._id)} onUpvoteIdeaHandler={() => onUpvoteIdeaHandler(currentIdea._id)}></IdeaCard>
         })}
       </Box>
     </>
