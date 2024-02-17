@@ -58,19 +58,20 @@ const UploadIdeaPage = () => {
     }
 	
 	const handleUpload = () => {
-		const payload : IUploadNewIdea = {
-			ideaName : ideaName, 
-			ideaDescription : ideaDescription, 
-			createdBy : loggedInUserDetails.userId, 
-			rating : parseInt(intensity, 10),
-			thumbnail : "",
-			othersKnow : othersKnow, 
-			category : category, 
-		}	
+		// here we have to send the formdata 
+		console.log("the file is as follows \n", uploadedFile);
+		const formDataPayload = new FormData();
+		formDataPayload.append("ideaName", ideaName);
+		formDataPayload.append("ideaDescription", ideaDescription);
+		formDataPayload.append("createdBy", loggedInUserDetails.userId);
+		formDataPayload.append("rating", intensity);
+		formDataPayload.append("othersKnow", othersKnow);
+		formDataPayload.append("category", category);
+		formDataPayload.append("thumbnail", uploadedFile as File);
 
-		console.log("the payload that we are sending is as follows \n", payload);
+		console.log("the formdata payload that we are sending is as follows \n", formDataPayload);
 		// backend call to create new idea 
-		createNewIdeasApi(payload, createNewIdeasApiCallback); 
+		createNewIdeasApi(formDataPayload, createNewIdeasApiCallback); 
 
 
 	}
@@ -179,7 +180,7 @@ const UploadIdeaPage = () => {
 						component="span"
 						sx={{
 							display: "flex",
-							justifyContent: "space-between",
+							justifyContent: "sp	ace-between",
 							alignItems: "center",
 							flexGrow: 1,
 							bgcolor: "background.default",

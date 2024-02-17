@@ -22,6 +22,20 @@ const getHeaders = (methodType : string) => {
 };
 
 
+const getHeadersForFileUpload = (methodType : string) => {
+    const headers = {
+        method: methodType,
+        credentials : 'include', 
+        withCredentials : true, 
+        headers: {
+            // Authorization: `bearer ${token}`,
+            'Content-Type': "multipart/form-data",
+            // withCredentials : true, 
+            
+        },
+    };
+    return headers;
+}
 
 const postApiCall = (url:string, payload :any, callback : any) => 
 {
@@ -31,6 +45,14 @@ const postApiCall = (url:string, payload :any, callback : any) =>
     .then((res) => callback('success', res))
     .catch((err) => callback("err", err));
 }
+
+const postApiCallForFileUpload = (url :string, payload : any, callback : any) => {
+    const headers = getHeadersForFileUpload('POST');
+    Api.post(`${url}`, payload, headers)
+    .then((res) => callback('success', res))
+    .catch((err) => callback("err", err));;
+}
+
 
 const getApiCall = (url : string,  callback : any) => 
 {
@@ -62,5 +84,6 @@ export {
     postApiCall, 
     getApiCall, 
     putApiCall, 
-    deleteApiCall
+    deleteApiCall, 
+    postApiCallForFileUpload
 }

@@ -9,11 +9,14 @@ import ShareIcon from '@mui/icons-material/Share';
 import imageThumbnail from "../../assets/thumb1.png";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
+import { useSelector } from "react-redux";
+import { getIdeaDetailsByIdApi } from "../../apis/IdeasRelatedApis";
 
 
 const IdeaDetailsPage = () => {
 
-
+    // fetch the list of ideas from react store 
+    const listOfIdeas =  useSelector((state : any) => state.ideaListReducer);
     const ideaId = useParams().ideaId;
 
     const [upvoted, setUpvoted] = useState<boolean>(false);
@@ -44,15 +47,36 @@ const IdeaDetailsPage = () => {
 
     }
 
+    // callbacks comes here after hitting the apis to the backend 
+    const getIdeaDetailsByIdApiCallback = (resultType : string, serverResponse : any) => {
+        console.log("the response from the server after making the get idea details part is as follows \n", serverResponse);
+    }
+
 
     useEffect(() => {
     //   write your code here 
-        console.log("the id of the idea is as follows \n", ideaId);
+        if(ideaId)
+        {
+            console.log("the id of the idea is as follows \n", ideaId);
+            getIdeaDetailsByIdApi(ideaId as string, getIdeaDetailsByIdApiCallback)
+
+        }
       return () => {
         // write cleanup code here if any for this purpose 
       }
-    }, [])
+    }, [ideaId])
+
+
+
+    useEffect(() => {
+        if(listOfIdeas)
+        {
+            console.log("the list of idea is as follows  from the ideadetails page for this purpose \n", listOfIdeas);
+            // we have to find the details about this project for this purpose 
+        }
+    }, [listOfIdeas])
     
+
 
     return (
         <>

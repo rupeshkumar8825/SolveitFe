@@ -19,7 +19,7 @@ export interface IUploadNewIdea {
     ideaDescription : string, 
     createdBy : string, 
     rating : number, 
-    thumbnail : string, 
+    thumbnail : File, 
     othersKnow : string,
     category : string, 
 }
