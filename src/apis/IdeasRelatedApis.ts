@@ -25,9 +25,23 @@ const getIdeaThumbnailApi = (callback : any) => {
     getApiCall(url, callback);
 }
 
+
+const upvoteIdeaByIdApi = (ideaId : string,  callback:any) =>{
+    let url = `${baseUrl}ideas/upvote/${ideaId}`;
+    postApiCall(url, {}, callback);
+}
+
+const removeUpvoteOfIdeaByIdApi = (ideaId : string, callback : any) => {
+    let url = `${baseUrl}ideas/unVote/${ideaId}`;
+    postApiCall(url, {}, callback);
+}
+
+
 export {
     getAllIdeasApi, 
     createNewIdeasApi, 
     getIdeaDetailsByIdApi, 
-    getIdeaThumbnailApi
+    getIdeaThumbnailApi, 
+    upvoteIdeaByIdApi, 
+    removeUpvoteOfIdeaByIdApi
 }

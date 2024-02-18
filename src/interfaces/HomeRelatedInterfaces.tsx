@@ -1,4 +1,5 @@
 import React from "react";
+import { IShare, IUpvote } from "./IdeaRelatedInterfaces";
 
 // here we will add the interfaces which will be used for the home page 
 export interface IIdeaCard {
@@ -6,15 +7,15 @@ export interface IIdeaCard {
     ideaTitle : string, 
     ideaDescription : string, 
     views : number,
-    upvotes : string[], 
-    shares : number, 
+    upvotes : IUpvote[], 
+    shares : IShare[], 
 }
 
 export interface IIdeaCardProps {
     id : string, 
     ideaTitle : string, 
     ideaDescription : string, 
-    upvotes : string[], 
-    shares : number, 
+    upvotes : IUpvote[], 
+    shares : IShare[], 
     thumbnail : string,
 }

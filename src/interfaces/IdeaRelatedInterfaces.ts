@@ -1,4 +1,14 @@
 // here we  will write the interfaces related to the idea for this purpose 
+export interface IUpvote {
+    _id : string
+}
+
+
+export interface IShare {
+    _id : string
+}
+
+
 export interface IIdeaDetails {
     _id : string,
     ideaName : string, 
@@ -9,10 +19,11 @@ export interface IIdeaDetails {
     rating : number, 
     thumbnail : string, 
     saved : string[], 
-    upvotes : string[], 
-    shared : string[], 
+    upvotes : IUpvote[], 
+    shared : IShare[], 
     othersKnow : string 
 }
+
 
 export interface IUploadNewIdea {
     ideaName : string, 

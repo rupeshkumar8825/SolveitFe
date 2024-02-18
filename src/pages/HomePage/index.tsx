@@ -59,7 +59,7 @@ const HomePage = () => {
       <Box sx={{display: "flex", justifyContent: 'space-evenly', flexWrap : "wrap",alignItems: 'center', mt: `10%`, width: `80%`, marginLeft: `16%`, paddingLeft:0, paddingRight:0, marginBottom: "4%"}}>
         {/* using the map function to show all the list of ideas for this purpose  */}
         {listOfIdeas?.map((currentIdea : IIdeaDetails) => {
-            return <IdeaCard  id={currentIdea._id} ideaTitle={currentIdea.ideaName} ideaDescription={currentIdea.ideaDescription} upvotes={currentIdea.upvotes} shares={currentIdea.shared.length} thumbnail={currentIdea.thumbnail}></IdeaCard>
+            return <IdeaCard  id={currentIdea._id} ideaTitle={currentIdea.ideaName} ideaDescription={currentIdea.ideaDescription} upvotes={currentIdea.upvotes} shares={currentIdea.shared} thumbnail={currentIdea.thumbnail}></IdeaCard>
         })}
       </Box>
     </>

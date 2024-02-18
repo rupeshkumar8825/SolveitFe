@@ -21,12 +21,15 @@ import { IIdeaCardProps } from '../../../interfaces/HomeRelatedInterfaces';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { removeUpvoteOfIdeaByIdApi, upvoteIdeaByIdApi } from '../../../apis/IdeasRelatedApis';
+import { IAuthState } from '../../../interfaces/AuthRelatedInterfaces';
 
 
 
 export default function IdeaCard(props : IIdeaCardProps) {
-  const loggedInUserDetails = useSelector((state : any) => state.authReducer);
+  const loggedInUserDetails : IAuthState = useSelector((state : any) => state.authReducer);
   const [upvoted, setUpvoted] = useState<boolean>(false);
+  const [totalNumberOfUpvotes, setTotalNumberOfUpvotes] = useState<number>(0);
   
 
   const navigate = useNavigate();
@@ -35,50 +38,59 @@ export default function IdeaCard(props : IIdeaCardProps) {
   //handlers for this component
   const onCommentHandler = () => {
   }
-
+  
   const onShareIdeaHandler = () => {
   } 
-
+  
   const onShowDetailsHandler = () => {
-      navigate(`/ideaDetails/${props.id}`);
+    navigate(`/ideaDetails/${props.id}`);
   }
 
   const onUpvoteClickIdeaHandler = () => {
-    // here we have to toggle the state and if it is going from the false to true then we have to call the upvote api 
-    console.log("the current state of the upvoted part is \n", upvoted);
     if(upvoted)
     {
-      // then we are removing this hence we will make it false 
+      removeUpvoteOfIdeaByIdApi(props.id as string, removeUpvoteOfIdeaByIdApiCallback);
+      setTotalNumberOfUpvotes(totalNumberOfUpvotes-1);
       setUpvoted(false);
-      // and then we will call the backend api call to perform this action for this purpose 
       
     }
     else
     {
       // this means that we upvoting the idea hence we have to call the backend api for this purpose 
+      upvoteIdeaByIdApi(props.id as string, upvoteIdeaByIdApiCallback);
+      setTotalNumberOfUpvotes(totalNumberOfUpvotes+1);
       setUpvoted(true);
     }
-    // or if we are moving towards the true to false then we have to call the remove upvote api to backend for this purpose 
-    // this way only that particular idea will only render and not the parent for this purpose 
-    // hence we have shifted the functions from the main component to this particular idea component for this purpose 
+   
 
     
   }
+
+  // callbacks for the application comes here for this purpose 
+  const removeUpvoteOfIdeaByIdApiCallback = (resultType : string, serverResponse : any) => {
+    console.log("the value of the serverresponse after removing the upvote is as follows", serverResponse);
+  }
   
-  
+
+  const upvoteIdeaByIdApiCallback = (resultType : string, serverResponse : any) => {
+    console.log("the value of the serverresponse after the upvote is as follows", serverResponse);
+  }
+
+
   useEffect(() => {
-    if(loggedInUserDetails)
+    if(loggedInUserDetails && props.upvotes.length > 0) 
     {
-      let isPresent = props.upvotes.find(currUser => currUser === loggedInUserDetails.userId);
-      console.log("the value of the ispresent is as follows : ", isPresent);
+      let isPresent = props.upvotes.find(currUser => currUser._id === loggedInUserDetails.userId);
       if(!isPresent)
       {
         setUpvoted(false);
+
       }
       else
       {
         setUpvoted(true);
       }
+      setTotalNumberOfUpvotes(props.upvotes.length);
 
     }
   }, [loggedInUserDetails])
@@ -166,7 +178,7 @@ export default function IdeaCard(props : IIdeaCardProps) {
           >
             <ThumbUpIcon sx={{color : `${upvoted? "blue" : null}`}}></ThumbUpIcon>
             <Typography onClick={onUpvoteClickIdeaHandler} sx={{marginLeft : "15px"}}>
-              {props.upvotes} Upvotes 
+              {totalNumberOfUpvotes} Upvotes 
             </Typography>
           </Box>
           
@@ -185,7 +197,7 @@ export default function IdeaCard(props : IIdeaCardProps) {
           >
             <ShareIcon></ShareIcon>
             <Typography onClick={onShareIdeaHandler} sx={{marginLeft : "15px"}}>
-              {props.shares} Share 
+              {props.shares.length} Share 
             </Typography>
           </Box>
 
