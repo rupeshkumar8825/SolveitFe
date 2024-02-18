@@ -75,7 +75,6 @@ const IdeaDetailsPage = () => {
     //   write your code here 
         if(ideaId)
         {
-            console.log("the id of the idea is as follows \n", ideaId);
             getIdeaDetailsByIdApi(ideaId as string, getIdeaDetailsByIdApiCallback)
 
         }

@@ -20,22 +20,6 @@ const HomePage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     
-    //handlers for this component
-    const onCommentHandler = (ideaId : string) => {
-    }
-
-    const onShareIdeaHandler = (ideaId : string) => {
-    } 
-
-    const onShowDetailsHandler = (ideaId : string) => {
-        navigate(`/ideaDetails/${ideaId}`);
-        
-    }
-
-    const onUpvoteIdeaHandler = (ideaId : string) => {
-    }
-
-
     
     const  getAllIdeasApiCallback = (resultType : string, serverResponse : any) => {
       if(serverResponse.response?.status && serverResponse.response.status === 500)
@@ -60,15 +44,10 @@ const HomePage = () => {
     }
 
 
-    const getIdeaThumbnailCallback = (resultType : string, serverResponse : any) => {
-      console.log("the response from the server is as follows \n", serverResponse);
-    }
-  
 
 
     useEffect(() => {
       getAllIdeasApi(getAllIdeasApiCallback)
-      // getIdeaThumbnailApi(getIdeaThumbnailCallback);
     },[])
     
 
@@ -80,7 +59,7 @@ const HomePage = () => {
       <Box sx={{display: "flex", justifyContent: 'space-evenly', flexWrap : "wrap",alignItems: 'center', mt: `10%`, width: `80%`, marginLeft: `16%`, paddingLeft:0, paddingRight:0, marginBottom: "4%"}}>
         {/* using the map function to show all the list of ideas for this purpose  */}
         {listOfIdeas?.map((currentIdea : IIdeaDetails) => {
-            return <IdeaCard  id={currentIdea._id} ideaTitle={currentIdea.ideaName} ideaDescription={currentIdea.ideaDescription}upvotes={currentIdea.upvotes.length} shares={currentIdea.shared.length} thumbnail={currentIdea.thumbnail} onCommentHandler={() => onCommentHandler(currentIdea._id)} onShareIdeaHandler={() => onShareIdeaHandler(currentIdea._id)} onShowDetailsHandler={() => onShowDetailsHandler(currentIdea._id)} onUpvoteIdeaHandler={() => onUpvoteIdeaHandler(currentIdea._id)}></IdeaCard>
+            return <IdeaCard  id={currentIdea._id} ideaTitle={currentIdea.ideaName} ideaDescription={currentIdea.ideaDescription} upvotes={currentIdea.upvotes} shares={currentIdea.shared.length} thumbnail={currentIdea.thumbnail}></IdeaCard>
         })}
       </Box>
     </>

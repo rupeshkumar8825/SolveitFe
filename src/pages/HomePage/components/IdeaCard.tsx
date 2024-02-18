@@ -18,10 +18,72 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import CommentIcon from '@mui/icons-material/Comment';
 import { IIdeaCardProps } from '../../../interfaces/HomeRelatedInterfaces';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function IdeaCard(props : IIdeaCardProps) {
+  const loggedInUserDetails = useSelector((state : any) => state.authReducer);
+  const [upvoted, setUpvoted] = useState<boolean>(false);
+  
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  //handlers for this component
+  const onCommentHandler = () => {
+  }
+
+  const onShareIdeaHandler = () => {
+  } 
+
+  const onShowDetailsHandler = () => {
+      navigate(`/ideaDetails/${props.id}`);
+  }
+
+  const onUpvoteClickIdeaHandler = () => {
+    // here we have to toggle the state and if it is going from the false to true then we have to call the upvote api 
+    console.log("the current state of the upvoted part is \n", upvoted);
+    if(upvoted)
+    {
+      // then we are removing this hence we will make it false 
+      setUpvoted(false);
+      // and then we will call the backend api call to perform this action for this purpose 
+      
+    }
+    else
+    {
+      // this means that we upvoting the idea hence we have to call the backend api for this purpose 
+      setUpvoted(true);
+    }
+    // or if we are moving towards the true to false then we have to call the remove upvote api to backend for this purpose 
+    // this way only that particular idea will only render and not the parent for this purpose 
+    // hence we have shifted the functions from the main component to this particular idea component for this purpose 
+
+    
+  }
+  
+  
+  useEffect(() => {
+    if(loggedInUserDetails)
+    {
+      let isPresent = props.upvotes.find(currUser => currUser === loggedInUserDetails.userId);
+      console.log("the value of the ispresent is as follows : ", isPresent);
+      if(!isPresent)
+      {
+        setUpvoted(false);
+      }
+      else
+      {
+        setUpvoted(true);
+      }
+
+    }
+  }, [loggedInUserDetails])
+
+
 
 
   return (
@@ -40,7 +102,7 @@ export default function IdeaCard(props : IIdeaCardProps) {
             }}
             >
             <Typography  sx={{padding: 0, fontWeight: "bold", fontSize : "1.2rem"}}>{props.ideaTitle} </Typography>
-          <Button onClick={props.onShowDetailsHandler} variant="contained" size='small' sx={{backgroundColor: "blue", width : "13%", height: "30px",fontSize : "0.6rem"}}>
+          <Button onClick={onShowDetailsHandler} variant="contained" size='small' sx={{backgroundColor: "blue", width : "13%", height: "30px",fontSize : "0.6rem"}}>
             Show details 
           </Button>
           </Box>
@@ -102,8 +164,8 @@ export default function IdeaCard(props : IIdeaCardProps) {
             // border : 2, 
           }}
           >
-            <ThumbUpIcon></ThumbUpIcon>
-            <Typography onClick={props.onUpvoteIdeaHandler} sx={{marginLeft : "15px"}}>
+            <ThumbUpIcon sx={{color : `${upvoted? "blue" : null}`}}></ThumbUpIcon>
+            <Typography onClick={onUpvoteClickIdeaHandler} sx={{marginLeft : "15px"}}>
               {props.upvotes} Upvotes 
             </Typography>
           </Box>
@@ -122,7 +184,7 @@ export default function IdeaCard(props : IIdeaCardProps) {
           }}
           >
             <ShareIcon></ShareIcon>
-            <Typography onClick={props.onShareIdeaHandler} sx={{marginLeft : "15px"}}>
+            <Typography onClick={onShareIdeaHandler} sx={{marginLeft : "15px"}}>
               {props.shares} Share 
             </Typography>
           </Box>
@@ -140,7 +202,7 @@ export default function IdeaCard(props : IIdeaCardProps) {
           }}
           >
             <CommentIcon></CommentIcon>
-            <Typography onClick={props.onCommentHandler} sx={{marginLeft : "15px"}}>
+            <Typography onClick={onCommentHandler} sx={{marginLeft : "15px"}}>
               Comments
             </Typography>
           </Box>

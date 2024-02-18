@@ -6,7 +6,7 @@ export interface IIdeaCard {
     ideaTitle : string, 
     ideaDescription : string, 
     views : number,
-    upvotes : number, 
+    upvotes : string[], 
     shares : number, 
 }
 
@@ -14,11 +14,7 @@ export interface IIdeaCardProps {
     id : string, 
     ideaTitle : string, 
     ideaDescription : string, 
-    upvotes : number, 
+    upvotes : string[], 
     shares : number, 
     thumbnail : string,
-    onShowDetailsHandler() : void, 
-    onUpvoteIdeaHandler () : void, 
-    onShareIdeaHandler () : void, 
-    onCommentHandler () : void
 }
