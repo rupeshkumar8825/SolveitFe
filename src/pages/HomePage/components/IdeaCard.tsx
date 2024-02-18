@@ -25,7 +25,7 @@ export default function IdeaCard(props : IIdeaCardProps) {
 
 
   return (
-    <Card sx={{width: "950px",  marginBottom: "3%", boxShadow: "7", borderColor : "black", borderRadius: "1%" }}>
+    <Card sx={{width: "65%",  marginBottom: "3%", boxShadow: "7", borderColor : "black", borderRadius: "1%" }}>
       <Box 
             component="span"
             sx={{
@@ -33,12 +33,10 @@ export default function IdeaCard(props : IIdeaCardProps) {
             justifyContent: "space-between",
             alignItems : "center",
             flexGrow: 1,
-            borderColor : "red",
             bgcolor: "background.default",
             padding:1, 
             height: "50px",
             marginBottom : "0.5%"
-            // marginTop : "25
             }}
             >
             <Typography  sx={{padding: 0, fontWeight: "bold", fontSize : "1.2rem"}}>{props.ideaTitle} </Typography>
@@ -47,12 +45,12 @@ export default function IdeaCard(props : IIdeaCardProps) {
           </Button>
           </Box>
       
-      <CardContent sx={{marginBottom : "1%"}}>
-        <Typography variant="body2" color="text.secondary">
-          {props.ideaDescription}
+      <CardContent sx={{marginBottom : "1%" , display : "flex", justifyContent : "center", alignItems : "center", flexDirection : 'column', width : "100%"}}>
+        <Typography variant="body2" color="text.secondary" sx={{width : "90%"}}>
+          {props.ideaDescription.length > 400? props.ideaDescription.substring(0, 400)+"....." : props.ideaDescription}
         </Typography>
-        <div className="container" style={{display : 'flex', alignItems : "center", justifyContent : "center", marginTop : "2%"}}>
-          <img src={`http://localhost:4004/${props.thumbnail}`} className="card-img-top" alt="Loading the thumbnail" style={{border : 2, borderColor : "black", width : "80%", height : "400px"}}/>
+        <div className="container" style={{display : 'flex', alignItems : "center", justifyContent : "center", marginTop : "2%",width : "80%"}}>
+          <img src={`http://localhost:4004/${props.thumbnail}`} className="card-img-top" alt="Loading the thumbnail" style={{border : 2, borderColor : "black", width : "100%", height : "200px"}}/>
 
         </div>
         <Typography sx={{border : 0.5, borderColor : "lightblue", marginTop : "3%"}}></Typography>
