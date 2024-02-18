@@ -10,27 +10,44 @@ import imageThumbnail from "../../assets/thumb1.png";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import { useDispatch, useSelector } from "react-redux";
-import { getIdeaDetailsByIdApi } from "../../apis/IdeasRelatedApis";
+import { getIdeaDetailsByIdApi, removeUpvoteOfIdeaByIdApi, upvoteIdeaByIdApi } from "../../apis/IdeasRelatedApis";
 import { IIdeaDetails } from "../../interfaces/IdeaRelatedInterfaces";
+import { IAuthState } from "../../interfaces/AuthRelatedInterfaces";
 
 
 const IdeaDetailsPage = () => {
+    const loggedInUserDetails : IAuthState = useSelector((state : any) => state.authReducer);
 
     const ideaId = useParams().ideaId;
     const [upvoted, setUpvoted] = useState<boolean>(false);
     const [shared, setShared] = useState<boolean>(false);
     const [addedToWatchList, setAddedToWatchList] = useState<boolean>(false);
-    const [ideaDetails, setIdeaDetails] = useState<IIdeaDetails>();
+  const [totalNumberOfUpvotes, setTotalNumberOfUpvotes] = useState<number>(0);
+  const [ideaDetails, setIdeaDetails] = useState<IIdeaDetails>();
 
 
     const dispatch = useDispatch();
-    // handler for the component for this purpose 
-    const onUpvoteIdeaHandler = () => {
-        // here we have to toggle the value of the upvoted for this purpose 
-        (upvoted==false)? setUpvoted(true) : setUpvoted(false);
-        console.log("the user has upvoted the current idea \n");
-    }
 
+    // handler for the component for this purpose 
+    const onUpvoteClickIdeaHandler = () => {
+        if(upvoted)
+        {
+          removeUpvoteOfIdeaByIdApi(ideaId as string, removeUpvoteOfIdeaByIdApiCallback);
+          setTotalNumberOfUpvotes(totalNumberOfUpvotes-1);
+          setUpvoted(false);
+          
+        }
+        else
+        {
+          // this means that we upvoting the idea hence we have to call the backend api for this purpose 
+          upvoteIdeaByIdApi(ideaId as string, upvoteIdeaByIdApiCallback);
+          setTotalNumberOfUpvotes(totalNumberOfUpvotes+1);
+          setUpvoted(true);
+        }
+       
+    
+        
+      }
 
     const onShareIdeaHandler = () => {
         console.log("the user is sharing the idea on social media may be for this purpose \n");
@@ -48,9 +65,20 @@ const IdeaDetailsPage = () => {
 
     }
 
+
+    // callbacks for the application comes here for this purpose 
+  const removeUpvoteOfIdeaByIdApiCallback = (resultType : string, serverResponse : any) => {
+    console.log("the value of the serverresponse after removing the upvote is as follows", serverResponse);
+  }
+  
+
+  const upvoteIdeaByIdApiCallback = (resultType : string, serverResponse : any) => {
+    console.log("the value of the serverresponse after the upvote is as follows", serverResponse);
+  }
+
+
     // callbacks comes here after hitting the apis to the backend 
     const getIdeaDetailsByIdApiCallback = (resultType : string, serverResponse : any) => {
-        console.log("the response from the server after making the get idea details part is as follows \n", serverResponse);
         if(serverResponse.response?.status && serverResponse.response.status === 500)
 		{
 			// do nothing for now 			
@@ -85,25 +113,28 @@ const IdeaDetailsPage = () => {
 
 
 
+    useEffect(() => {
+        if(loggedInUserDetails && ideaDetails) 
+        {
+          let isPresent = ideaDetails.upvotes.find(currUser => currUser._id === loggedInUserDetails.userId);
+          if(!isPresent)
+          {
+            setUpvoted(false);
+    
+          }
+          else
+          {
+            setUpvoted(true);
+          }
+          setTotalNumberOfUpvotes(ideaDetails.upvotes.length);
+    
+        }
+      }, [loggedInUserDetails, ideaDetails])
+
 
     return (
         <>
         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: 'center', alignItems: 'center', mt: `10%`, width: `83%`, marginLeft: `16%`, paddingLeft: 0, paddingRight: 0, marginBottom: "4%"}}>
-            {/* box for topic  */}
-            {/* <Box
-            component="main"
-            sx={{
-                bgcolor: "background.default",
-                width: "30%",
-                padding: 0,
-                height: '7vh',
-                marginBottom: "3%", 
-                // border : 2
-            }}
-            >
-                <Typography sx={{ padding: 0.5, fontSize: "1.5em", textAlign: "center", backgroundColor: "#D9D9D9", borderRadius: 2 }}>Idea Details : {ideaDetails?.ideaName}</Typography>
-            </Box> */}
-
             
 
             {/* box for a field for username  */}
@@ -185,8 +216,8 @@ const IdeaDetailsPage = () => {
                     }}
                     >
                         {upvoted? <ThumbUpIcon style={{color : "blue"}}/> : <ThumbUpIcon/>}
-                        <Typography onClick={onUpvoteIdeaHandler}  sx={{marginLeft : "15px"}}>
-                        {ideaDetails?.upvotes.length} Upvotes 
+                        <Typography onClick={onUpvoteClickIdeaHandler}  sx={{marginLeft : "15px"}}>
+                        {totalNumberOfUpvotes} Upvotes 
                         </Typography>
                     </Box>
                     
