@@ -18,7 +18,7 @@ export interface IIdeaDetails {
     category : string, 
     rating : number, 
     thumbnail : string, 
-    saved : string[], 
+    saved : string[],  
     upvotes : IUpvote[], 
     shared : IShare[], 
     othersKnow : string 
